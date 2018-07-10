@@ -32,7 +32,7 @@ let package = Package(
 	],
 	dependencies: [
 		.package(url: "https://github.com/PerfectlySoft/Perfect-CRUD.git", from: "1.0.0"),
-		.package(url: "https://github.com/Sombre-Osmoze/\(clientPackage).git", from: "2.0.0"),
+		.package(url: "https://github.com/Sombre-Osmoze/\(clientPackage).git", majorVersion: 2),
 		],
 	targets: [
 		.target(name: "PerfectMySQL", dependencies: ["PerfectCRUD"]),
