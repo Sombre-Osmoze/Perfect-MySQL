@@ -11,6 +11,7 @@
 	import Darwin
 #endif
 import mysqlclient
+import Foundation
 
 /// handles mysql prepared statements
 public final class MySQLStmt {
@@ -698,7 +699,7 @@ public final class MySQLStmt {
 				guard res == 0 else {
 					return nil
 				}
-				let s = UTF8Encoding.encode(generator: GenerateFromPointer(from: raw, count: length))
+				let s = String(data: Data(bytes: raw, count: length), encoding: .ascii)
 				return s
 			case .null:
 				return nil
