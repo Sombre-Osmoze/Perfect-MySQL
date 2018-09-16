@@ -138,6 +138,9 @@ class MySQLCRUDRowReader<K : CodingKey>: KeyedDecodingContainerProtocol {
 				throw CRUDDecoderError("Unsupported type: \(type) for key: \(key.stringValue)")
 			}
 			return try JSONDecoder().decode(type, from: data)
+		default:
+			fatalError("Ce code n'est pas fiable")
+
 		}
 	}
 	func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type, forKey key: Key) throws -> KeyedDecodingContainer<NestedKey> where NestedKey : CodingKey {
@@ -269,7 +272,7 @@ class MySQLGenDelegate: SQLGenDelegate {
 	func getColumnDefinition(_ column: TableStructure.Column) throws -> String {
 		let name = column.name
 		let type = column.type
-		let typeName: String
+		var typeName: String = ""
 		switch type {
 		case is Int.Type:
 			typeName = "bigint"
@@ -316,6 +319,8 @@ class MySQLGenDelegate: SQLGenDelegate {
 				typeName = "datetime"
 			case .codable:
 				typeName = "json"
+			default:
+				fatalError("Ce code n'est pas fiable")
 			}
 		}
 		let addendum: String
@@ -448,6 +453,8 @@ class MySQLStmtExeDelegate: SQLExeDelegate {
 			statement.bindParam(d)
 		case .sblob(let b):
 			statement.bindParam(b)
+		default:
+			fatalError("Ce code n'est pas fiable")
 		}
 	}
 }
